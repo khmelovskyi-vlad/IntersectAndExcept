@@ -10,51 +10,50 @@ namespace IntersectAndExcept
     {
         static void Main(string[] args)
         {
-            var a = new List<string>() { "as", "s", "ew", "asd" };
-            var b = new List<string>() { "as", "3", "ew" };
+            var a = new List<string>() { "as", "s", "ew", "asd", "vlad" };
+            var b = new List<string>() { "vlad", "as", "3", "ew" };
             var test = Intersect2(a,b);
             PrintWords(test);
+            Console.WriteLine();
             var test2 = Except2(a,b);
             PrintWords(test2);
             Console.ReadKey();
         }
         static IEnumerable<string> Intersect2 (List<string> firstStringNew, List<string> secondStringNew)
         {
-            List<string> intersect2 = new List<string>();
+            List<string> intersectList = new List<string>();
             for (int i = 0; i < firstStringNew.Count; i++)
             {
                 for (int j = 0; j < secondStringNew.Count; j++)
                 {
                     if (firstStringNew[i] == secondStringNew[j])
                     {
-                        intersect2.Add(firstStringNew[i]);
+                        intersectList.Add(firstStringNew[i]);
                     }
                 }
             }
-            return intersect2.Distinct();
+            return intersectList.Distinct();
         }
         static IEnumerable<string> Except2 (List<string> firstStringNew, List<string> secondStringNew)
         {
-            List<string> intersect2 = new List<string>();
-            for (int i = 0; i < firstStringNew.Count; i++)
+            List<string> exceptList = new List<string>();
+            for (int i = 0; i<firstStringNew.Count; i++)
             {
-                for (int j = 0; j < secondStringNew.Count; j++)
+                var breakExcept = false;
+                for (int j = 0; j<secondStringNew.Count; j++)
                 {
                     if (firstStringNew[i] == secondStringNew[j])
                     {
+                        breakExcept = true;
                         break;
                     }
-                    else if (firstStringNew[i] != secondStringNew[secondStringNew.Count - 1])
-                    {
-                        intersect2.Add(firstStringNew[i]);
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                }
+                if (!breakExcept)
+                {
+                    exceptList.Add(firstStringNew[i]);
                 }
             }
-            return intersect2.Distinct();
+            return exceptList.Distinct();
         }
         private static void PrintWords(IEnumerable<string> words)
         {
